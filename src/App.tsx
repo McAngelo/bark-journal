@@ -40,12 +40,36 @@ const App = () => {
       content: "bla bla note6",
     },
   ]);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  const handleAddNote = (event: React.FormEvent) => {
+    event.preventDefault();
+    console.log("title", title);
+    console.log("content: ", content);
+
+    const newNote: Note = {
+      id: Math.random(),
+      title: title,
+      content: content,
+    };
+    setNotes([...notes, newNote]);
+    setTitle("");
+    setContent("");
+  };
 
   return (
     <div className="app-container">
-      <form className="note-form">
-        <input type="text" className="note-input" placeholder='Title' required />
-        <textarea placeholder='Content' rows={10}></textarea>
+      <form className="note-form" onSubmit={handleAddNote}>
+        <input type="text" 
+              value={title} 
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder='Title' required />
+        <textarea placeholder='Content'
+                  value={content} 
+                  onChange={(e) => setContent(e.target.value)}
+                  rows={10}
+                  required></textarea>
         <button type="submit" className="note-submit"> Add Note </button>
       </form>
       <div className="notes-grid">
@@ -57,7 +81,7 @@ const App = () => {
             <h2> {note.title} </h2>
             <p> {note.content} </p>
           </div>
-        ))};
+        ))}
       </div>
     </div>
   );
