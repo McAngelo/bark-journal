@@ -24,8 +24,6 @@ const App = () => {
 
         if(status == 200)
         {
-          console.log('Success');
-          console.log(data);
           setNotes(data);
         }
         else
@@ -34,23 +32,38 @@ const App = () => {
         }
       } catch (error) {
         console.log(error);        
-      }
-      
+      }      
     };
 
     fetchNotes();
   }, []);
 
-  const handleAddNote = (event: React.FormEvent) => {
+  const handleAddNote = async (event: React.FormEvent) => {
     event.preventDefault();
-    const newNote: Note = {
+    /* const newNote: Note = {
       id: Math.random(),
       title: title,
       content: content,
-    };
-    setNotes([...notes, newNote]);
-    setTitle("");
-    setContent("");
+    }; */
+    try {
+      const response = await fetch('http://localhost:4000/api/notes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({title, content})
+      });
+      const {status, data, message} = await response.json();
+
+      setNotes([...notes, data]);
+      setTitle("");
+      setContent("");
+    } catch (error) {
+      console.log(error);
+      
+    }
+
+    
   };
 
   const handleNoteClick = (note: Note) => {
