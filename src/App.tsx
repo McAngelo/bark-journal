@@ -60,10 +60,7 @@ const App = () => {
       setContent("");
     } catch (error) {
       console.log(error);
-      
     }
-
-    
   };
 
   const handleNoteClick = (note: Note) => {
@@ -72,22 +69,47 @@ const App = () => {
     setContent(note.content);
   };
 
-  const handleUpdateNote = (event: React.FormEvent) => {
+  const handleUpdateNote = async (event: React.FormEvent) => {
     event.preventDefault();
     
     if(!selectedNote) return;
 
-    const updatedNote: Note = {
-      id: selectedNote.id,
-      title: title,
-      content: content,
-    };
+   try {
+      const response = await fetch(
+        `http://localhost:4000/api/notes/${selectedNote.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            content,
+          }),
+        }
+      );
 
-    const updatedNotes = notes.map((note) => (note.id === selectedNote?.id ? updatedNote : note));
+      const {status, message, data} = await response.json();
+
+      const updatedNotesList = notes.map((note) =>
+        note.id === selectedNote.id
+          ? data
+          : note
+      );
+
+      setNotes(updatedNotesList);
+      setTitle("");
+      setContent("");
+      setSelectedNote(null);
+    } catch (e) {
+      console.log(e);
+    }
+
+   /*  const updatedNotes = notes.map((note) => (note.id === selectedNote?.id ? updatedNote : note));
     setNotes(updatedNotes);
     setTitle("");
     setContent("");
-    setSelectedNote(null);
+    setSelectedNote(null); */
   };
 
   const handleCancel = () => {
@@ -96,10 +118,17 @@ const App = () => {
     setSelectedNote(null);
   };
 
-  const deleteNote = (event: React.MouseEvent, noteId: number) => {
+  const deleteNote = async (event: React.MouseEvent, noteId: number) => {
     event.stopPropagation();
-    const updatedNotes = notes.filter((note) => note.id !== noteId);
-    setNotes(updatedNotes);
+
+     try {
+      await fetch(`http://localhost:4000/api/notes/${noteId}`, {method: 'DELETE'});
+      const updatedNotes = notes.filter((note) => note.id !== noteId);
+      setNotes(updatedNotes);
+    } catch (error) {
+      console.log(error);
+      
+    }
   };
 
   return (
