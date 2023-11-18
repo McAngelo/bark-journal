@@ -42,12 +42,10 @@ const App = () => {
   ]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [selectedNote, setSelectedNote] = useState<Note | null>(null);
 
   const handleAddNote = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("title", title);
-    console.log("content: ", content);
-
     const newNote: Note = {
       id: Math.random(),
       title: title,
@@ -58,9 +56,39 @@ const App = () => {
     setContent("");
   };
 
+  const handleNoteClick = (note: Note) => {
+    setSelectedNote(note);
+    setTitle(note.title);
+    setContent(note.content);
+  };
+
+  const handleUpdateNote = (event: React.FormEvent) => {
+    event.preventDefault();
+    
+    if(!selectedNote) return;
+
+    const updatedNote: Note = {
+      id: selectedNote.id,
+      title: title,
+      content: content,
+    };
+
+    const updatedNotes = notes.map((note) => (note.id === selectedNote?.id ? updatedNote : note));
+    setNotes(updatedNotes);
+    setTitle("");
+    setContent("");
+    setSelectedNote(null);
+  };
+
+  const handleCancel = () => {
+    setTitle("");
+    setContent("");
+    setSelectedNote(null);
+  };
+
   return (
     <div className="app-container">
-      <form className="note-form" onSubmit={handleAddNote}>
+      <form className="note-form" onSubmit={(event) => (selectedNote ? handleUpdateNote(event) : handleAddNote(event))}>
         <input type="text" 
               value={title} 
               onChange={(e) => setTitle(e.target.value)}
@@ -74,7 +102,7 @@ const App = () => {
       </form>
       <div className="notes-grid">
         {notes.map((note) => (
-          <div className="notes-item">
+          <div key={note.id} className="notes-item" onClick={()=> handleNoteClick(note)}>
             <div className="notes-header">
               <button> X </button>
             </div>
