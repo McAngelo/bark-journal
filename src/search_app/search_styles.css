@@ -1,0 +1,71 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+#searchBtn {
+  background: #0099ff;
+  color: white;
+  font: "trebuchet ms", trebuchet;
+  padding: 10px 20px;
+  border-radius: 0 5px 5px 0;
+  -moz-border-radius: 0 5px 5px 0;
+  -webkit-border-radius: 0 5px 5px 0;
+  -o-border-radius: 0 5px 5px 0;
+  border: 0 none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#searchName {
+  background: #eee;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  border: 0 none;
+  width: 160px;
+}
+
+#searchPrice {
+  background: #eee;
+  padding: 10px;
+  border-radius: 5px 0 0 5px;
+  -moz-border-radius: 5px 0 0 5px;
+  -webkit-border-radius: 5px 0 0 5px;
+  -o-border-radius: 5px 0 0 5px;
+  border: 0 none;
+  width: 160px;
+}
+
+/* list styles */
+
+table {
+  width: 70%;
+  padding: 10px;
+}
+
+table tr td {
+  position: relative;
+  min-height: 35px;
+  padding: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th {
+  background: #030303;
+  color: white;
+  font-weight: bold;
+}
+td,
+th {
+  line-height: 35px;
+  vertical-align: middle;
+  border: 1px solid #000;
+  text-align: left;
+}
