@@ -1,7 +1,7 @@
 import { useReducer, useContext, createContext } from "react";
-import * as eventsData from "../public/events";
+import * as eventsData from "../../public/events.json";
 
-const flattenEvents = (mData) => {
+const flattenEvents = (mData: any) => {
   let flattenedData:any = [];
 
   if (!mData) return;

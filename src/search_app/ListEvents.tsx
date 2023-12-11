@@ -1,7 +1,7 @@
 import "./styles.css";
 import { useAppContext } from "./MyContext";
 export const ListEvents = () => {
-  const [globalState] = useAppContext();
+  const [globalState, dispatch] = useAppContext();
 
   return (
     <div>
