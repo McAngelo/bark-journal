@@ -41,7 +41,7 @@ const AppReducer = (state:any, action:any) => {
 const MyContext = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialValue);
   return (
-    <AppContext.Provider value={[state, dispatch]}>
+    <AppContext.Provider value = {[state, dispatch]}>
       {children}
     </AppContext.Provider>
   );
